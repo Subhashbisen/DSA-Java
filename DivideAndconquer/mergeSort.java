@@ -1,0 +1,77 @@
+package DivideAndconquer;
+
+public class mergeSort {
+    public static void printArray(int nums[]) {
+        for (int i = 0; i < nums.length; i++) {
+            System.out.print(nums[i] + " ");
+        }
+
+        System.out.println();
+    };
+
+    public static void mergesort(int nums[], int left, int right) {
+
+        // * base case
+        if (left >= right) {
+            return;
+        }
+
+        // * kaam
+        int mid = left + (right - left) / 2;
+
+        mergesort(nums, left, mid); // * left part */
+        mergesort(nums, mid + 1, right); // *right part */
+        merge(nums, left, mid, right);
+    }
+
+    public static void merge(int nums[], int left, int mid, int right) {
+
+        int temp[] = new int[right - left + 1];
+
+        int i = left;
+        int j = mid + 1;
+        int k = 0;
+
+        while (i <= mid && j <= right) {
+            if (nums[i] < nums[j]) {
+                temp[k] = nums[i];
+                i++;
+            } else {
+                temp[k] = nums[j];
+                j++;
+            }
+            k++;
+        }
+
+        // * left part
+        while (i <= mid) {
+            temp[k] = nums[i];
+            i++;
+            k++;
+        }
+
+        // * right part
+        while (j <= right) {
+            temp[k] = nums[j];
+            j++;
+            k++;
+        }
+
+        int k2 = 0;
+        int l = left;
+
+        // * copy temp to original num array
+        while (k2 < temp.length) {
+            nums[l] = temp[k2];
+            k2++;
+            l++;
+        }
+    }
+
+
+    public static void main(String[] args) {
+        int nums[] = { 6, 3, 9, 5, 2, 8 };
+        mergesort(nums, 0, nums.length - 1);
+        printArray(nums);
+    }
+}
